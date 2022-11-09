@@ -1,12 +1,12 @@
  (defcfg
   ;; ** For Linux **
-  input  (device-file "/dev/input/by-id/usb-04d9_USB-HID_Keyboard-event-kbd")
+  ;; input  (device-file "/dev/input/by-id/usb-04d9_USB-HID_Keyboard-event-kbd")
   ;; input  (device-file "/dev/input/by-id/usb-Matias_Ergo_Pro_Keyboard-event-kbd")
-  output (uinput-sink "KMonad output")
+  ;; output (uinput-sink "KMonad output")
 
   ;; ** For Windows **
-  ;; input  (low-level-hook)
-  ;; output (send-event-sink)
+  input  (low-level-hook)
+  output (send-event-sink)
 
   ;; ** For MacOS **
   ;; input  (iokit-name "my-keyboard-product-string")
@@ -16,62 +16,42 @@
 )
 
 (defsrc
-  esc     f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
-  grv     1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab     q    w    e    r    t    y    u    i    o    p    [    ]    \
+  esc     f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12                         prnt    slck   pause
+  grv     1    2    3    4    5    6    7    8    9    0    -    =    bspc                   ins     home   pgup
+  tab     q    w    e    r    t    y    u    i    o    p    [    ]    \                      del     end    pgdn
   caps    a    s    d    f    g    h    j    k    l    ;    '    ret
-  lsft      z    x    c    v    b    n    m    ,    .    /    rsft
-  lctl    lmet lalt           spc            ralt rmet cmp  rctl
+  lsft      z    x    c    v    b    n    m    ,    .    /    rsft                                   up
+  lctl    lmet lalt           spc            ralt rmet cmp  rctl                             left    down   right
 )
- 
+
 (defalias
   ext  (layer-toggle extend) ;; Bind 'ext' to the Extend Layer
 )
 
 (defalias
-  cpy C-c
-  pst C-v
-  cut C-x
-  udo C-z
-  all C-a
-  fnd C-f
-  bk Back
-  fw Forward
+    cpy C-c
+    pst C-v
+    cut C-x
+    udo C-z
+    all C-a
+    fnd C-f
+    dw C-bspc
 )
 
 (deflayer colemak-dh
-  esc     f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
-  grv      1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab      q    w    f    p    b    j    l    u    y    ;    [    ]    \\
-  @ext     a    r    s    t    g    m    n    e    i    o    '    ret
-  lsft       x    c    d    v    z    k    h    ,    .    /    rsft
-  lctl     lmet lalt           spc            ralt rmet _    _
-)
-
-(deflayer colemak-dhk
-  esc     f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
-  grv      1    2    3    4    5    6    7    8    9    0    -    =    bspc
-  tab      q    w    f    p    b    j    l    u    y    ;    [    ]    \\
-  @ext     a    r    s    t    g    k    n    e    i    o    '    ret
-  lsft       x    c    d    v    z    m    h    ,    .    /    rsft
-  lctl     lmet lalt           spc            ralt rmet _    _
+    esc     f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12                         spc     spc    spc
+    grv     1    2    3    4    5    6    =    7    8    9    0    -    spc                    spc     spc    spc
+    tab     q    w    f    p    b    [    j    l    u    y    ;    '    \\                     spc     spc    spc
+    @ext    a    r    s    t    g    ]    m    n    e    i    o    ret
+    lsft      x    c    d    v    z    /    k    h    ,    .    rsft                                   spc
+    lctl    lmet lalt           spc            ralt rmet _    _                                spc     spc    spc
 )
 
 (deflayer extend
-  _        play rewind previoussong nextsong ejectcd refresh brdn brup www mail prog1 prog2
-  _        f1   f2   f3   f4   f5   f6   f7   f8   f9  f10   f11  f12  _
-  _        esc  @bk  @fnd @fw  ins  pgup home up   end  menu prnt slck _
-  _        lalt lmet lsft lctl ralt pgdn lft  down rght del  caps _
-  _          @cut @cpy  tab  @pst @udo pgdn bks  lsft lctl comp _
-  _        _    _              ret            _    _    _    _
-)
-
-
-(deflayer empty
-  _        _    _    _    _    _    _    _    _    _    _    _    _    
-  _        _    _    _    _    _    _    _    _    _    _    _    _    _
-  _        _    _    _    _    _    _    _    _    _    _    _    _    _
-  _        _    _    _    _    _    _    _    _    _    _    _    _ 
-  _          _    _    _    _    _    _    _    _    _    _    _ 
-  _        _    _              _              _    _    _    _
+    _       play rewind previoussong nextsong ejectcd refresh brdn brup www mail prog1 prog2   spc     spc    spc
+    _       f1   f2   f3   f4   f5   f6   f12  f7   f8   f9   f10  f11  _                      spc     spc    spc
+    _       esc  _    @fnd _    _    _    pgup home up   end  menu caps _                      spc     spc    spc
+    _       lalt lmet lsft lctl ralt slck @dw  left down rght del  _
+    _         @cut @cpy tab  @pst @udo comp pgdn bks  lsft lctl _                                      spc
+    _       _    _              spc            _    _    _    _                                spc     spc    spc
 )
